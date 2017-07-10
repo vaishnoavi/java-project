@@ -13,11 +13,11 @@ pipeline {
           sh 'ant -f build.xml -v'
       }
     }
-  }
     stage('deploy') {
 	steps {
 	  sh 'cp dist/restangle_${env.BUILD_NUMBER}.jar	/var/www/html/restangles/all/'
       }
+    }
   }
   post {
         always {
