@@ -51,6 +51,7 @@ pipeline {
 	  echo "Checking out to dev branch"
 	  sh 'git checkout development'
 	  echo "Checking otu master"
+	  sh 'git pull'
  	  sh 'git checkout master'
 	  echo "merge dev to master"
 	  sh 'git merge development'
