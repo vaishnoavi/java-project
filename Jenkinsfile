@@ -15,13 +15,13 @@ pipeline {
     }
     stage('deploy') {
 	steps {
-	  sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar	/var/www/html/rectangles/all/${env.BRANCH_NAME}"
+	  sh "cp dist/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}"
       }
     }
     stage("Run on Centos") {
 	steps {
-	  sh "wget http://vaishnoavi5.mylabserver.com:8079/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.BUILD_NUMBER}.jar"
-	  sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
+	  sh "wget http://vaishnoavi5.mylabserver.com:8079/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
+	  sh "java -jar rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
       }
     }
     stage("Run on Debian") {
@@ -29,8 +29,8 @@ pipeline {
 	  docker 'openjdk:8u121-jre'
         }
         steps {
-          sh "wget http://vaishnoavi5.mylabserver.com:8079/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.BUILD_NUMBER}.jar"
-          sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
+          sh "wget http://vaishnoavi5.mylabserver.com:8079/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
+          sh "java -jar rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
       }
     }
     stage("Promote to green") {
@@ -38,7 +38,7 @@ pipeline {
 	  branch 'development'
       }
         steps {
-	  sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/rectangle_${env.BUILD_NUMBER}.jar"
+	  sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
       }
     }
     stage("Promote dev branch to master") {
@@ -57,6 +57,9 @@ pipeline {
 	  sh 'git merge development'
 	  echo "push origin to master"
 	  sh 'git push origin master'
+	  echo 'adding tags'
+	  sh 'git tag rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar'
+	  sh 'git push origin rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar'
       }
     }
   }
