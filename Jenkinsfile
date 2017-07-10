@@ -15,7 +15,7 @@ pipeline {
     }
     stage('deploy') {
 	steps {
-	  sh 'cp dist/restangle_${env.BUILD_NUMBER}.jar	/var/www/html/restangles/all/'
+	  sh 'cp dist/rectangle_${env.BUILD_NUMBER}.jar	/var/www/html/restangles/all/'
       }
     }
   }
