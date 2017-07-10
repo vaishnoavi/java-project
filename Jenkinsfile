@@ -62,8 +62,8 @@ pipeline {
 	  echo "push origin to master"
 	  sh 'git push origin master'
 	  echo 'adding tags'
-	  sh 'git tag rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar'
-	  sh 'git push origin rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar'
+	  sh "git tag rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
+	  sh "git push origin rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
       }
     }
   }
