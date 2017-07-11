@@ -78,11 +78,9 @@ pipeline {
     }
   }
   post {
-        always {
+    always {
           archiveArtifacts artifacts: 'dist/*.jar', fingerprint: true
       }
-    }
-  post {
     failure {
       emailext(
         subject: "${env.JOB_NAME} [${env.BUILD_NUMBER}] Failed!",
