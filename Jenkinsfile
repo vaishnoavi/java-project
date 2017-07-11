@@ -6,6 +6,11 @@ pipeline {
   }
  
   stages {
+    stage('Say Hello') {
+	steps {
+          sayHello 'Awesome Student!'
+      }
+    }
     stage('Unit Test') {
 	steps {
 	  sh 'ant -f test.xml -v'
