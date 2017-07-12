@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Say Hello') {
 	steps {
-          sayHello 'Awesome Student!'
+          sayHello 'Awesome Student !'
       }
     }
     stage('Unit Test') {
