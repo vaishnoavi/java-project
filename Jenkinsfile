@@ -11,6 +11,15 @@ pipeline {
           sayHello 'Awesome Student!'
       }
     }
+    stage('Git info') {
+        steps {
+          echo "My branch name : ${env.BRANCH_NAME}"
+	  script {
+	    def myLib = new linuxacademy.git.gitStuff();
+	    echo "My commit: ${myLib.gitCommit(${env.WORKSPACE/.git})}"
+	}
+      }
+    }
     stage('Unit Test') {
 	steps {
 	  sh 'ant -f test.xml -v'
